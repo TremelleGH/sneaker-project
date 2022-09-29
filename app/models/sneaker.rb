@@ -1,5 +1,5 @@
 class Sneaker < ApplicationRecord
-    belongs_to :user
-    belongs_to :cart
-    belongs_to :favorite
+    belongs_to :user, optional: true
+    belongs_to :cart, optional: true
+    belongs_to :favorite, optional: true
 end

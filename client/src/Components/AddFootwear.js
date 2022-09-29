@@ -11,39 +11,57 @@ function AddFootwear() {
   const [price, setPrice] = useState('')
   const [brand, setBrand] = useState('')
   const [amount, setAmount] = useState('')
-  const [errors, setErrors] = useState([])
+ // const [errors, setErrors] = useState([])
 
-  const addFootwearForm= (e) => {
-    e.preventDefault()
-    const formData = new FormData()
-    if (image) {
-      formData.append('image', image)
-    }
-    formData.append('name', name)
-    formData.append('price', price)
-    formData.append('brand', brand)
-    formData.append('amount', amount)
-
-    fetch('http://localhost:3000/sneakers',{
-      method: "POST",
-      body: formData
-    })
-    .then(res => {
-      if(res.ok){
-        res.json()
-        .then(data => {
-          setErrors([])
-          navigate('/sneakers')
-        })
-      }else {
-        res.json()
-        .then(({errors}) => {
-          setErrors(errors)
-        })
-      }
-    })
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch('http://localhost:3000/sneakers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        image,
+        price,
+        brand,
+        amount,
+      }),
+    });
+    navigate('/sneakers')
   }
+
+  // const addFootwearForm= (e) => {
+  //   e.preventDefault()
+  //   const formData = new FormData()
+  //   if (image) {
+  //     formData.append('image', image)
+  //   }
+  //   formData.append('name', name)
+  //   formData.append('price', price)
+  //   formData.append('brand', brand)
+  //   formData.append('amount', amount)
+
+  //   fetch('http://localhost:3000/sneakers',{
+  //     method: "POST",
+  //     body: formData
+  //   })
+  //   .then(res => {
+  //     if(res.ok){
+  //       res.json()
+  //       .then(data => {
+  //         setErrors([])
+  //         navigate('/sneakers')
+  //       })
+  //     }else {
+  //       res.json()
+  //       .then(({errors}) => {
+  //         setErrors(errors)
+  //       })
+  //     }
+  //   })
+
+  // }
 // const [formData, setFormData] = useState({
 //   name: '',
 //   image: '',
@@ -115,7 +133,7 @@ function AddFootwear() {
     <div>
       <NavBar/>
      <div className="form-content">
-      <form className='form' onSubmit={addFootwearForm} style={{opacity: "0.9", marginTop: "30rem"}}>
+      <form className='form' onSubmit={handleSubmit} style={{opacity: "0.9"}}>
         <h1 className="form-title">Add Sneaker</h1>
         <div className="form-inputs">
           <label htmlFor="name" className="form-label">Name</label>

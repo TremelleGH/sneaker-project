@@ -1,9 +1,10 @@
 class SneakersController < ApplicationController
   skip_before_action :authenticate_user
+  
   # before_action :is_authorized?, only: [:create]
   # before_action :authorize
-  skip_before_action :authorize, only: [:index]
-  before_action :set_sneaker, only: [:show, :update, :destroy]
+  # skip_before_action :authorize, only: [:index]
+  # before_action :set_sneaker, only: [:show, :update, :destroy]
   
   # GET /sneakers
   def index
@@ -39,7 +40,8 @@ class SneakersController < ApplicationController
 
   # DELETE /sneakers/1
   def destroy
-    @sneaker.destroy
+    set_sneaker.destroy
+    head :no_content
   end
 
   private
@@ -50,7 +52,7 @@ class SneakersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sneaker_params
-      params.permit(:name, :image, :price, :brand, :amount)
+      params.require(:sneaker).permit(:name, :image, :price, :brand, :amount)
     end
 
     def authorize

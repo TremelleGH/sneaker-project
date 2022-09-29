@@ -12,8 +12,7 @@ const [formData, setFormData] = useState({
     last_name: '',
     username: '',
     email: '',
-    password: '',
-    password2: '',
+    password: ''
   })
 
   const [errors, setErrors] = useState([])
@@ -114,18 +113,6 @@ const [formData, setFormData] = useState({
             id='password' 
             type="password" 
             name='password' 
-            className="form-input" 
-            placeholder='Enter your password'
-            value={password}
-            onChange={handleChange}
-            />
-        </div>
-        <div className="form-inputs">
-          <label htmlFor='password2'className="form-label">Confirm Password</label>
-          <input 
-            id='password2' 
-            type="password" 
-            name='password2' 
             className="form-input" 
             placeholder='Enter your password'
             value={password}

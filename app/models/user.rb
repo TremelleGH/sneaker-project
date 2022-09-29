@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     has_many :sneakers
-    has_one :cart, through: :sneakers
-    has_one :favorite, through: :sneakers
+    has_one :cart
+    has_one :favorite
     validates :username, uniqueness: true
 
     has_secure_password

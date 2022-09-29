@@ -2,12 +2,12 @@ import React from 'react'
 import SneakerContainer from './SneakerContainer'
 import Navbar from './Navbar'
 import SearchBar from './SearchBar'
+import Announcement from './Announcement'
 
 
 
 
-
-function SneakerPage({handleClick, search, setSearch, filteredSneakers, sneakers, updateUser, currentUser}) {
+function SneakerPage({handleDelete, handleClick, search, setSearch, filteredSneakers, sneakers, updateUser, currentUser}) {
 
     // const  [sneakers, setSneakers] = useState([])
     // const [search, setSearch] = useState("")
@@ -39,9 +39,10 @@ function SneakerPage({handleClick, search, setSearch, filteredSneakers, sneakers
 
   return (
     <div>
+        <Announcement/>
         <Navbar updateUser={updateUser} currentUser={currentUser}/>
         <SearchBar search={search} setSearch={setSearch}/>
-        <SneakerContainer  sneakers={sneakers} filteredSneakers={filteredSneakers} handleClick={handleClick}/>
+        <SneakerContainer  sneakers={sneakers} filteredSneakers={filteredSneakers} handleClick={handleClick} handleDelete={handleDelete} />
     </div>
   )
 }
