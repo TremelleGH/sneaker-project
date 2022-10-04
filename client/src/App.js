@@ -8,6 +8,7 @@ import Favorites from './Components/Favorites';
 import { useState, useEffect } from 'react';
 import AddFootwear from './Components/AddFootwear';
 import NewHomePage from './Components/NewHomePage';
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -16,49 +17,18 @@ function App() {
 const [sneakers, setSneakers] = useState([])
 const [search, setSearch] = useState("")
 const [currentUser, setCurrentUser] = useState(false)
+const navigate = useNavigate()
 
 useEffect(() => {
   fetch('http://localhost:3000/sneakers')
   .then(res => res.json())
-  .then(data => setSneakers(data))
+  .then(sneakers => setSneakers(sneakers))
 },[])
 
+const onAddSneaker = (newSneaker) => {
+  setSneakers([...sneakers, newSneaker])
+}
 
-const filteredSneakers = sneakers.filter(sneaker => sneaker.name.toLowerCase().includes(search.toLowerCase()))
-
-//const addSneaker = (sneaker) => setSneakers(current => [...current,sneaker])
-// const deleteSneaker = (id) => setSneakers(current => current.filter(s => s.id !== id))
-
-// function handleDelete() {
-//   fetch(`http://localhost:3000/sneakers/${sneakers.id}`, {
-//     method: 'DELETE',
-//     headers: {'Content-Type': 'application/json'}
-//   })
-//   .then(res => {
-//     if(res.ok){
-//       deleteSneaker(id)
-//     }
-//   })
-// }
-
-
-// function addSneaker(e) {
-//   fetch('http://localhost:3000/sneakers',{
-//     method: "POST",
-//     headers: {
-//       "Accept" : "application/json",
-//       "content-Type": "application/json"},
-//       body: JSON.stringify(
-//         ({
-//           'name': e.target.name.value,
-//           'image': e.target.image.value,
-//           'price': e.target.price.value,
-//           'brand': e.target.brand.value,
-//           'amount': e.target.amount.value,
-//         }),
-//       )
-//   })
-// }
 
 function handleDelete(id) {
   fetch(`http://localhost:3000/sneakers/${id}`,{
@@ -68,7 +38,9 @@ function handleDelete(id) {
  setSneakers(fSneakers)
 }
 
-
+function handleSearchSneaker(e){
+  setSearch(e.target.value)
+}
 
 
 
@@ -99,9 +71,9 @@ const updateUser = (user) => setCurrentUser(user)
       <Route path="/" element={<LoginPage updateUser={updateUser}/>}/>
       <Route path="/createAccount" element={<CreateAccount updateUser={updateUser}/>}/>
       <Route path="/favorites" element={<Favorites/>}/>
-      <Route path="/addFootwear" element={<AddFootwear />}/>
+      <Route path="/addFootwear" element={<AddFootwear onAddSneaker={onAddSneaker}/>}/>
       <Route path="/cart" element={<Cart handleChange={handleChange} cart={cart} setCart={setCart}/>}/>
-      <Route path="/sneakers" element={<SneakerPage handleDelete={handleDelete} currentUser={currentUser} handleClick={handleClick} search={search} setSearch={setSearch}  filteredSneakers={filteredSneakers} sneakers={sneakers} updateUser={updateUser}/>}/>
+      <Route path="/sneakers" element={<SneakerPage handleDelete={handleDelete} currentUser={currentUser} handleClick={handleClick} search={search} sneakers={sneakers} updateUser={updateUser} handleSearchSneaker={handleSearchSneaker}/>}/>
       {/* <Route path="/sneakerPage" element={<SneakerPage/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/cart" element={<Cart/>}/>

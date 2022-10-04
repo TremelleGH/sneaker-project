@@ -10,7 +10,7 @@ import Modal from '@mui/material/Modal';
 
 
 function SneakerCard({sneaker, handleClick, handleDelete}) {
-const {name, image, price, brand, id} = sneaker
+const {name, description, image, price, brand, id} = sneaker
 const [open, setOpen] = React.useState(false);
 const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
@@ -20,7 +20,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 550,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -48,11 +48,17 @@ const style = {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-modal-title" variant="h7" component="h2">
             {name}
           </Typography>
+          {/* <CardMedia
+          component="img"
+          height="250"
+          image={image}
+          alt={name}
+      /> */}
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {description}
           </Typography>
         </Box>
       </Modal>

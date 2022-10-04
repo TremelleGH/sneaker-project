@@ -6,8 +6,7 @@ import Announcement from './Announcement'
 
 
 
-
-function SneakerPage({handleDelete, handleClick, search, setSearch, filteredSneakers, sneakers, updateUser, currentUser}) {
+function SneakerPage({handleDelete, handleClick, search, setSearch, sneakers, updateUser, currentUser, handleSearchSneaker}) {
 
     // const  [sneakers, setSneakers] = useState([])
     // const [search, setSearch] = useState("")
@@ -41,8 +40,8 @@ function SneakerPage({handleDelete, handleClick, search, setSearch, filteredSnea
     <div>
         <Announcement/>
         <Navbar updateUser={updateUser} currentUser={currentUser}/>
-        <SearchBar search={search} setSearch={setSearch}/>
-        <SneakerContainer  sneakers={sneakers} filteredSneakers={filteredSneakers} handleClick={handleClick} handleDelete={handleDelete} />
+        <SearchBar search={search} setSearch={setSearch} handleSearchSneaker={handleSearchSneaker}/>
+        <SneakerContainer  sneakers={sneakers} search={search} handleClick={handleClick} handleDelete={handleDelete} />
     </div>
   )
 }

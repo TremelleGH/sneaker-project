@@ -1,139 +1,50 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './CreateAccount.css'
 import NavBar from './Navbar'
 import { useNavigate } from 'react-router-dom'
 
-function AddFootwear() {
+function AddFootwear({onAddSneaker}) {
 
-  const navigate = useNavigate()
-  const [name, setName] = useState('')
-  const [image, setImage] = useState('')
-  const [price, setPrice] = useState('')
-  const [brand, setBrand] = useState('')
-  const [amount, setAmount] = useState('')
- // const [errors, setErrors] = useState([])
+const [formData, setFormData] = useState({
+    name:"",
+    image:"",
+    price:"",
+    brand:"",
+    amount:"",
+    description:""
+  })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch('http://localhost:3000/sneakers', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        image,
-        price,
-        brand,
-        amount,
-      }),
-    });
-    navigate('/sneakers')
+const handleOnChange = (e) => {
+    const {name, value} = e.target
+    setFormData(formDataObj => ({...formDataObj, [name]:value}))
+    
+}
+
+const navigate = useNavigate()
+
+const handleSubmit = (e) => {
+      e.preventDefault()
+      onAddSneaker(formData);
+      navigate('/sneakers')
+
+  setFormData({
+    name:"",
+    image:"",
+    price:"",
+    brand:"",
+    amount:"",
+    description:""
+  });
+
+
   }
-
-  // const addFootwearForm= (e) => {
-  //   e.preventDefault()
-  //   const formData = new FormData()
-  //   if (image) {
-  //     formData.append('image', image)
-  //   }
-  //   formData.append('name', name)
-  //   formData.append('price', price)
-  //   formData.append('brand', brand)
-  //   formData.append('amount', amount)
-
-  //   fetch('http://localhost:3000/sneakers',{
-  //     method: "POST",
-  //     body: formData
-  //   })
-  //   .then(res => {
-  //     if(res.ok){
-  //       res.json()
-  //       .then(data => {
-  //         setErrors([])
-  //         navigate('/sneakers')
-  //       })
-  //     }else {
-  //       res.json()
-  //       .then(({errors}) => {
-  //         setErrors(errors)
-  //       })
-  //     }
-  //   })
-
-  // }
-// const [formData, setFormData] = useState({
-//   name: '',
-//   image: '',
-//   price: '',
-//   brand: '',
-//   amount: ''
-// })
-
-// const [errors, setErrors] = useState([])
-// const navigate = useNavigate()
-// const {name, image, price, brand, amount} = formData
-
-// function onSubmit(e){
-//   e.preventDefault()
-//   const sneaker = {
-//     name,
-//     image,
-//     price,
-//     brand,
-//     amount
-//   }
-
-
-//   fetch(`http://localhost:3000/sneakers`,{
-//     method:'POST',
-//     headers: {'Content-Type': 'application/json'},
-//     body:JSON.stringify(sneaker)
-//     })
-//     .then(res => {
-//       if(res.ok){
-//         res.json().then(sneaker => {
-//           navigate(`/sneakers`)
-//         })
-//       }else{
-//         res.json().then(json => setErrors(Object.entries(json.errors)))
-//       }
-//     })
-//   }
-
-
-
-// const handleChange = (e) => {
-//   const {name, value} = e.target
-//   setFormData({...formData, [name]: value})
-// }
-
-// function onSubmit(e){
-//   e.preventDefault()
-
-
-//   fetch('http://localhost:3000/sneakers',{
-//   method:'POST',
-//   headers: {'Content-Type': 'application/json'},
-//   body:JSON.stringify({...formData, ongoing:true})
-//   })
-//   .then(res => {
-//     if(res.ok){
-//       res.json().then(addSneaker)
-//     }else{
-//       res.json().then(data => {
-//         setErrors(Object.entries(data.errors))
-//       })
-//     }
-//   })
-// }
 
 
   return (
     <div>
       <NavBar/>
      <div className="form-content">
-      <form className='form' onSubmit={handleSubmit} style={{opacity: "0.9"}}>
+      <form className='form' onSubmit={handleSubmit} style={{opacity: "0.9"}} >
         <h1 className="form-title">Add Sneaker</h1>
         <div className="form-inputs">
           <label htmlFor="name" className="form-label">Name</label>
@@ -143,8 +54,8 @@ function AddFootwear() {
             name='name' 
             className="form-input" 
             placeholder='Enter Sneaker Name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formData.name}
+            onChange={handleOnChange}
             />
         </div>
         <div className="form-inputs">
@@ -155,8 +66,8 @@ function AddFootwear() {
             name='image' 
             className="form-input" 
             placeholder='Enter Image Url'
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            value={formData.image}
+            onChange={handleOnChange}
             />
         </div>
         <div className="form-inputs">
@@ -167,8 +78,8 @@ function AddFootwear() {
             name='price' 
             className="form-input" 
             placeholder='Enter Sneaker Price in USD'
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={formData.price}
+            onChange={handleOnChange}
             />
         </div>
         <div className="form-inputs">
@@ -179,8 +90,8 @@ function AddFootwear() {
             name='brand' 
             className="form-input" 
             placeholder='Enter Brand Name'
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
+            value={formData.brand}
+            onChange={handleOnChange}
             />
         </div>
         <div className="form-inputs">
@@ -191,8 +102,20 @@ function AddFootwear() {
             name='amount' 
             className="form-input" 
             placeholder='Enter 1'
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            value={formData.amount}
+            onChange={handleOnChange}
+            />
+        </div>
+        <div className="form-inputs">
+          <label htmlFor='description'className="form-label">Description</label>
+          <input 
+            id='description' 
+            type="text" 
+            name='description' 
+            className="form-input" 
+            placeholder='Enter Model Description'
+            value={formData.description}
+            onChange={handleOnChange}
             />
         </div>
         <button className='btn btn-primary' type='submit'>Submit</button>

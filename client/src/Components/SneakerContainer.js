@@ -3,10 +3,11 @@ import React from 'react'
 import SneakerCard from './SneakerCard'
 
 
-function SneakerContainer({handleDelete, sneakers, filteredSneakers, handleClick}) {
+function SneakerContainer({handleDelete, sneakers, search, handleClick}) {
+  const filterSneakers = sneakers.filter(sneaker=>{return sneaker.name?.toLowerCase().includes(search.toLowerCase())})
 
 
-    const showSneakers = filteredSneakers?.map(sneaker => {
+    const showSneakers = filterSneakers?.map(sneaker => {
         return <Grid style={{padding: "20px"}} item xs={3}><SneakerCard sx={{maxWidth: "auto"}} key={sneaker.id} sneaker={sneaker} handleClick={handleClick} handleDelete={handleDelete}/></Grid>
     })
 

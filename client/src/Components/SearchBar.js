@@ -2,7 +2,7 @@ import React from 'react'
 import './SearchBar.css'
 
 
-function SearchBar({search, setSearch}) {
+function SearchBar({search, setSearch, handleSearchSneaker}) {
   // const [search, setSearch] = useState("")
   // const [sneakers, setSneakers] = useState([])
 
@@ -23,8 +23,7 @@ function SearchBar({search, setSearch}) {
     <>
      <div className='templateContainer'>
       <div className="searchInput_Container">
-        <input id="searchInput" type='text' placeholder="Search for your favorite shoe here!" onChange={(event) =>{
-          setSearch(event.target.value);}}/>
+        <input id="searchInput" type='text' placeholder="Search for your favorite shoe here!" onChange={handleSearchSneaker} value={search}/>
       </div>
    
     </div> 
