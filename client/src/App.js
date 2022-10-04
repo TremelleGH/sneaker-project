@@ -26,6 +26,14 @@ useEffect(() => {
 },[])
 
 const onAddSneaker = (newSneaker) => {
+  fetch(`http://localhost:3000/sneakers`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(newSneaker)
+  })
   setSneakers([...sneakers, newSneaker])
 }
 
