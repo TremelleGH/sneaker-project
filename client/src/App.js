@@ -17,7 +17,7 @@ function App() {
 const [sneakers, setSneakers] = useState([])
 const [search, setSearch] = useState("")
 const [currentUser, setCurrentUser] = useState(false)
-const navigate = useNavigate()
+// const navigate = useNavigate()
 
 useEffect(() => {
   fetch('http://localhost:3000/sneakers')
@@ -34,7 +34,14 @@ const onAddSneaker = (newSneaker) => {
     },
     body: JSON.stringify(newSneaker)
   })
-  setSneakers([...sneakers, newSneaker])
+  .then(r => {
+    if (r.ok) {
+      r.json().then(s => setSneakers([...sneakers, s]))
+    } else {
+      console.log(r.status)
+      alert("Unable to create sneaker")
+    }
+  })
 }
 
 
