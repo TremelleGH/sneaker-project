@@ -7,8 +7,6 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 
-
-
 function LoginPage({updateUser}) {
 
   const [formData, setFormData] = useState({
